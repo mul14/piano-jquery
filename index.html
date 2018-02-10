@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Piano jQuery</title>
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <style>
+    body {
+      background: #333 url('images/musical-background-2842924_1280.jpg');
+      background-size: cover;
+      height: 100vh;
+    }
+    .container {
+      height: 100%;
+    }
+    .row {
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-1">
+        <button data-key="c" class="key btn btn-lg btn-block btn-success">C</button>
+      </div>
+      <div class="col-1">
+        <button data-key="d" class="key btn btn-lg btn-block btn-success">D</button>
+      </div>
+      <div class="col-1">
+        <button data-key="e" class="key btn btn-lg btn-block btn-success">E</button>
+      </div>
+      <div class="col-1">
+        <button data-key="f" class="key btn btn-lg btn-block btn-success">F</button>
+      </div>
+      <div class="col-1">
+        <button data-key="g" class="key btn btn-lg btn-block btn-success">G</button>
+      </div>
+      <div class="col-1">
+        <button data-key="a" class="key btn btn-lg btn-block btn-success">A</button>
+      </div>
+    </div>
+  </div>
+
+  <audio src="audio/Snare Barrel.wav" id="audio-c"></audio>
+  <audio src="audio/Snare Dubverb.wav" id="audio-d"></audio>
+  <audio src="audio/Snare Hai.wav" id="audio-e"></audio>
+  <audio src="audio/Snare Power Bright.wav" id="audio-f"></audio>
+  <audio src="audio/Snare Stick 3.wav" id="audio-g"></audio>
+  <audio src="audio/Snare Tiny.wav" id="audio-a"></audio>
+
+
+  <script src="js/jquery-3.2.1.min.js"></script>
+  <script>
+
+    $(document).ready(function () {
+
+      $('.key').on('click', function () {
+        const key = $(this).data('key')
+        $('#audio-' + key).trigger('play')
+      })
+
+      $('body').on('keypress', function (event) {
+        const keys = ['c', 'd', 'e', 'f', 'g', 'a'];
+
+        if (  $.inArray(event.key, keys, -1)  ) {
+          const button = $('button[data-key="' + event.key + '"]')[0]
+          $(button).addClass('btn-danger').removeClass('btn-success')
+          $('#audio-' + event.key).trigger('load').trigger('play')
+          setTimeout(function(){
+            $(button).addClass('btn-success').removeClass('btn-danger')
+          }, 180)
+        }
+
+      })
+    })
+
+
+  </script>
+</body>
+</html>
